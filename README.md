@@ -100,27 +100,3 @@ BLOB_READ_WRITE_TOKEN=vercel_blob_rw_...
 3. **Mock interview** → answer questions (text or voice) → real-time feedback  
 4. **Progress page** → track improvement over time  
 5. **Repeat** → ace the real interview!
-
----
-
-## 🧩 API Endpoints (used internally)
-
-| Route | Method | Purpose |
-|---|---|---|
-| `/api/answer` | `POST` | Save Q-A pair + score |
-| `/api/...` | — | Everything else handled via Next.js server actions |
-
----
-
-## 📄 License
-MIT © 2024 VoiceVibe Team
-
----
-
-## 🙌 Contributing
-PRs welcome! Feel free to open issues for bugs or enhancements.
-
----
-
-**Happy interviewing & good luck landing the job! 🎤**
-```

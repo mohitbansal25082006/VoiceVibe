@@ -5,6 +5,13 @@ import { put } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
 import { randomUUID } from "crypto";
 
+// ---------- Get Progress ----------
+export async function getProgress(userId: string) {
+  const { rows } =
+    await sql`SELECT question, score, created_at FROM answers WHERE user_id = ${userId} ORDER BY created_at DESC`;
+  return rows;
+}
+
 // ---------- Create Interview ----------
 export async function createInterview(
   userId: string,

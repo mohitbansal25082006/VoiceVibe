@@ -46,6 +46,27 @@ export default function InterviewRoom({ interviewId, userId }: InterviewRoomProp
     loadQuestion();
   }, [loadQuestion]);
 
+  // --- New helper to save answer to backend ---
+  async function saveAnswer() {
+    if (!feedback) return;
+    try {
+      await fetch("/api/answer", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          interviewId,
+          userId,
+          question,
+          answer,
+          score: feedback.score,
+          feedback: `${feedback.strengths} | ${feedback.improvements}`,
+        }),
+      });
+    } catch (error) {
+      console.error("Failed to save answer:", error);
+    }
+  }
+
   const submitAnswer = async () => {
     if (!answer.trim()) {
       toast.warning("Answer is empty");
@@ -55,6 +76,7 @@ export default function InterviewRoom({ interviewId, userId }: InterviewRoomProp
     try {
       const fb: Feedback = await evaluateAnswer(question, answer);
       setFeedback(fb);
+      await saveAnswer(); // <-- save after feedback
     } catch (e) {
       if (e instanceof Error) {
         toast.error(e.message);

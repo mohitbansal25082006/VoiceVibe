@@ -1,17 +1,15 @@
-import type { NextConfig } from "next";
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  eslint: { ignoreDuringBuilds: false },
+  typescript: { ignoreBuildErrors: false },
+  images: { domains: ["images.unsplash.com", "public.blob.vercel-storage.com"] },
 
-const nextConfig: NextConfig = {
-  /* Turbopack is enabled by CLI flag --turbopack */
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
-        port: "",
-        pathname: "/**",
-      },
-    ],
-  },
+  /* OLD → REMOVE
+  experimental: { turbo: {} },
+  */
+
+  /* NEW → ADD */
+  turbopack: {},
 };
 
-export default nextConfig;
+module.exports = nextConfig;

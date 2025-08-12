@@ -146,6 +146,13 @@ export default function DashboardShell({ userId }: { userId: string }) {
 
       <Separator className="my-8" />
 
+      {/* Progress link */}
+      <div className="flex justify-end mb-6">
+        <Link href="/dashboard/progress">
+          <Button variant="outline">View Progress</Button>
+        </Link>
+      </div>
+
       {/* Stats */}
       <motion.div
         variants={container}

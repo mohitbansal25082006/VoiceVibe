@@ -103,7 +103,7 @@ export default function DashboardShell({ userId }: { userId: string }) {
     (i) => new Date(i.createdAt).getTime() > Date.now() - 7 * 24 * 60 * 60 * 1000
   ).length;
 
-  /* Empty state */
+  /* ---------- Empty state ---------- */
   if (!loading && total === 0) {
     return (
       <motion.div
@@ -114,12 +114,18 @@ export default function DashboardShell({ userId }: { userId: string }) {
         <Sparkles className="mx-auto h-16 w-16 text-primary mb-6" />
         <h2 className="text-3xl font-bold mb-2">Welcome to VoiceVibe!</h2>
         <p className="text-muted-foreground mb-8">
-          You don’t have any interviews yet. Create your first one to start practicing.
+          You don’t have any interviews yet. Create your first one to start
+          practicing.
         </p>
-        <Button size="lg" onClick={openSetup}>
+        <Button size="lg" onClick={() => setShowSetup(true)}>
           <Plus className="mr-2 h-5 w-5" />
           Create Interview
         </Button>
+        <AnimatePresence>
+          {showSetup && (
+            <InterviewSetup userId={userId} onClose={() => setShowSetup(false)} />
+          )}
+        </AnimatePresence>
       </motion.div>
     );
   }

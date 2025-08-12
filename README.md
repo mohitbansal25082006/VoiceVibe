@@ -1,36 +1,139 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+```markdown
+# 🎤 VoiceVibe – AI Interview Coach
 
-## Getting Started
+**Live Demo:** [https://voicevibe-nine.vercel.app](https://voicevibe-nine.vercel.app)
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 📌 What is VoiceVibe?
+VoiceVibe is a **full-stack, production-ready web app** that simulates professional job interviews using **OpenAI GPT-4** and **Whisper**.  
+Users pick a role, difficulty & type, then receive **instant feedback** on their answers—typed or spoken.  
+Everything is **free-tier friendly**, deployed on **Vercel**, and built with **Next.js 14**.
+
+---
+
+## ✨ Key Features
+- 🧠 **GPT-4 powered questions** tailored to the chosen role & difficulty  
+- 🎙️ **Voice or text answers** via Whisper & Web Speech API  
+- 📊 **Visual progress tracking** with Recharts (score per day & distribution)  
+- 🔐 **Auth** via Clerk (email, Google, GitHub)  
+- 📄 **Resume upload** via Vercel Blob Storage  
+- 🌗 **Dark / light toggle**  
+- 📈 **Vercel Analytics** & SEO meta tags baked in  
+- 🚀 **Zero-cost stack** (only pay-as-you-go OpenAI usage)
+
+---
+
+## 🛠️ Tech Stack
+| Layer | Tech |
+|---|---|
+| **Frontend** | Next.js 14 (App Router), React, Tailwind CSS, ShadCN UI |
+| **Auth** | Clerk |
+| **Database** | Vercel Postgres (free tier) |
+| **File Storage** | Vercel Blob Storage |
+| **AI** | OpenAI GPT-4 + Whisper |
+| **Charts** | Recharts |
+| **Deploy** | Vercel (Turbo + Analytics) |
+
+---
+
+## 📦 Environment Variables
+Create `.env.local` with:
+
+```env
+OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxx
+NEXT_PUBLIC_OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxx
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_xxxxxxxx
+CLERK_SECRET_KEY=sk_test_xxxxxxxx
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/dashboard
+NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/dashboard
+POSTGRES_URL=postgres://...
+BLOB_READ_WRITE_TOKEN=vercel_blob_rw_...
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🚀 Getting Started (local)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Clone**  
+   ```bash
+   git clone https://github.com/<you>/voicevibe.git
+   cd voicevibe
+   ```
 
-## Learn More
+2. **Install**  
+   ```bash
+   npm install
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+3. **Run**  
+   ```bash
+   npm run dev
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. **Build**  
+   ```bash
+   npm run build
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 📋 Project Phases (Parts 1-6)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Part | What We Built |
+|---|---|
+| **1** | Project setup, Next.js 14, TypeScript, Tailwind, Clerk, ShadCN |
+| **2** | Beautiful landing page + auth flows |
+| **3** | Protected dashboard, interview creation form, resume upload |
+| **4** | Live mock-interview page (text/voice Q&A, instant GPT-4 feedback) |
+| **5** | Progress analytics – save every answer & show Recharts graphs |
+| **6** | **Production deploy** to Vercel, SEO, analytics, dark-mode polish |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🎯 User Journey
+
+1. **Sign up / in** (Clerk)  
+2. **Create interview** → choose role, difficulty, type, optional resume  
+3. **Mock interview** → answer questions (text or voice) → real-time feedback  
+4. **Progress page** → track improvement over time  
+5. **Repeat** → ace the real interview!
+
+---
+
+## 🧩 API Endpoints (used internally)
+
+| Route | Method | Purpose |
+|---|---|---|
+| `/api/answer` | `POST` | Save Q-A pair + score |
+| `/api/...` | — | Everything else handled via Next.js server actions |
+
+---
+
+## 🌐 Live Demo & Screenshots
+
+🎉 **Try it now:** [https://voicevibe-nine.vercel.app](https://voicevibe-nine.vercel.app)
+
+| Page | Screenshot |
+|---|---|
+| Landing | ![Landing](https://voicevibe-nine.vercel.app/og.png) |
+| Dashboard | ![Dashboard](https://voicevibe-nine.vercel.app/dashboard.png) |
+| Interview | ![Interview](https://voicevibe-nine.vercel.app/interview.png) |
+| Progress | ![Progress](https://voicevibe-nine.vercel.app/progress.png) |
+
+---
+
+## 📄 License
+MIT © 2024 VoiceVibe Team
+
+---
+
+## 🙌 Contributing
+PRs welcome! Feel free to open issues for bugs or enhancements.
+
+---
+
+**Happy interviewing & good luck landing the job! 🎤**
+```

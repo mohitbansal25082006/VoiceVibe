@@ -1,4 +1,3 @@
-// src/lib/actions.ts
 "use server";
 
 import { sql } from "@vercel/postgres";
@@ -45,4 +44,14 @@ export async function getInterviews(userId: string) {
   const { rows } =
     await sql`SELECT * FROM interviews WHERE user_id = ${userId} ORDER BY created_at DESC`;
   return rows;
+}
+
+// ---------- Delete Interview ----------
+export async function deleteInterview(id: string) {
+  try {
+    await sql`DELETE FROM interviews WHERE id = ${id}`;
+    revalidatePath("/dashboard");
+  } catch (err) {
+    console.error("deleteInterview error:", err);
+  }
 }

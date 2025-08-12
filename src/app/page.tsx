@@ -1,103 +1,230 @@
+// src/app/page.tsx
+"use client";
+
+import { useState, useEffect } from "react";
+import Link from "next/link";
 import Image from "next/image";
+import {
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
+import { Menu, X, Moon, Sun, Mic, BrainCircuit, BarChart3 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
-export default function Home() {
+/* ---------- Re-usable section wrappers ---------- */
+const Section = ({
+  className,
+  children,
+}: {
+  className?: string;
+  children: React.ReactNode;
+}) => (
+  <section className={cn("py-20 px-6 md:px-10 lg:px-16", className)}>
+    {children}
+  </section>
+);
+
+/* ---------- Navbar ---------- */
+const Navbar = () => {
+  const [open, setOpen] = useState(false);
+  const [dark, setDark] = useState(false);
+
+  useEffect(() => {
+    if (dark) document.documentElement.classList.add("dark");
+    else document.documentElement.classList.remove("dark");
+  }, [dark]);
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+        <Link href="/" className="flex items-center gap-2">
+          <Mic className="h-7 w-7 text-primary" />
+          <span className="text-2xl font-bold">VoiceVibe</span>
+        </Link>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+        {/* Desktop nav */}
+        <nav className="hidden md:flex items-center gap-6">
+          <SignedOut>
+            <SignInButton>
+              <Button variant="outline">Sign In</Button>
+            </SignInButton>
+            <SignUpButton>
+              <Button>Get Started</Button>
+            </SignUpButton>
+          </SignedOut>
+          <SignedIn>
+            <Link href="/dashboard">
+              <Button variant="ghost">Dashboard</Button>
+            </Link>
+            <UserButton />
+          </SignedIn>
+          <button
+            onClick={() => setDark(!dark)}
+            className="p-2 rounded-md hover:bg-muted"
+            aria-label="Toggle theme"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            {dark ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
+        </nav>
+
+        {/* Mobile nav */}
+        <div className="md:hidden flex items-center">
+          <button
+            onClick={() => setDark(!dark)}
+            className="p-2 mr-2 rounded-md hover:bg-muted"
+            aria-label="Toggle theme"
           >
-            Read our docs
-          </a>
+            {dark ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
+          <button onClick={() => setOpen(!open)}>
+            {open ? <X size={26} /> : <Menu size={26} />}
+          </button>
         </div>
+      </div>
+
+      {/* Mobile menu */}
+      {open && (
+        <div className="md:hidden flex flex-col gap-4 px-6 pb-4 border-t">
+          <SignedOut>
+            <SignInButton>
+              <Button variant="outline" className="w-full">
+                Sign In
+              </Button>
+            </SignInButton>
+            <SignUpButton>
+              <Button className="w-full">Get Started</Button>
+            </SignUpButton>
+          </SignedOut>
+          <SignedIn>
+            <Link href="/dashboard" onClick={() => setOpen(false)}>
+              <Button variant="ghost" className="w-full">
+                Dashboard
+              </Button>
+            </Link>
+            <div className="flex justify-center">
+              <UserButton />
+            </div>
+          </SignedIn>
+        </div>
+      )}
+    </header>
+  );
+};
+
+/* ---------- Hero ---------- */
+const Hero = () => (
+  <Section className="flex flex-col items-center text-center bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-900 dark:via-slate-950 dark:to-slate-800">
+    <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight">
+      Ace Every Interview with{" "}
+      <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-600">
+        AI Coaching
+      </span>
+    </h1>
+    <p className="max-w-2xl mt-6 text-lg md:text-xl text-muted-foreground">
+      Practice realistic questions, get instant feedback on tone & content, and
+      track your progress—all powered by GPT-4.
+    </p>
+
+    <div className="mt-10 flex flex-col sm:flex-row gap-4">
+      <SignedOut>
+        <SignUpButton>
+          <Button size="lg" className="h-12 px-8 text-base">
+            Get Started Free
+          </Button>
+        </SignUpButton>
+        <SignInButton>
+          <Button size="lg" variant="outline" className="h-12 px-8 text-base">
+            Sign In
+          </Button>
+        </SignInButton>
+      </SignedOut>
+      <SignedIn>
+        <Link href="/dashboard">
+          <Button size="lg" className="h-12 px-8 text-base">
+            Go to Dashboard
+          </Button>
+        </Link>
+      </SignedIn>
+    </div>
+
+    {/* Hero mock */}
+    <div className="mt-16 w-full max-w-5xl">
+      <Image
+        src="/hero.png"
+        alt="Interview simulation"
+        width={1200}
+        height={600}
+        className="rounded-xl shadow-2xl border"
+      />
+    </div>
+  </Section>
+);
+
+/* ---------- Features ---------- */
+const Features = () => {
+  const cards = [
+    {
+      icon: <Mic className="h-10 w-10 text-primary" />,
+      title: "Voice & Text",
+      desc: "Answer questions with speech or text—our AI understands both.",
+    },
+    {
+      icon: <BrainCircuit className="h-10 w-10 text-primary" />,
+      title: "Smart Feedback",
+      desc: "Real-time analysis of tone, confidence, and content quality.",
+    },
+    {
+      icon: <BarChart3 className="h-10 w-10 text-primary" />,
+      title: "Progress Tracking",
+      desc: "Visual dashboards to see how you improve over time.",
+    },
+  ];
+
+  return (
+    <Section>
+      <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+        Why VoiceVibe?
+      </h2>
+      <div className="grid md:grid-cols-3 gap-8">
+        {cards.map((c) => (
+          <div
+            key={c.title}
+            className="flex flex-col items-center text-center p-8 rounded-xl border bg-card shadow-sm hover:shadow-lg transition"
+          >
+            {c.icon}
+            <h3 className="mt-4 text-xl font-semibold">{c.title}</h3>
+            <p className="mt-2 text-muted-foreground">{c.desc}</p>
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
+};
+
+/* ---------- Footer ---------- */
+const Footer = () => (
+  <footer className="border-t">
+    <div className="max-w-7xl mx-auto py-6 px-6 text-center text-sm text-muted-foreground">
+      © {new Date().getFullYear()} VoiceVibe – Built with Next.js 14, Clerk,
+      Tailwind & ❤️.
+    </div>
+  </footer>
+);
+
+/* ---------- Main Page ---------- */
+export default function LandingPage() {
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Navbar />
+      <main className="flex-1">
+        <Hero />
+        <Features />
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      <Footer />
     </div>
   );
 }

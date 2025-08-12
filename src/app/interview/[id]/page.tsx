@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import VoiceRoom from "@/components/interview/VoiceRoom";
+import InterviewRoom from "@/components/interview/InterviewRoom";
 
 export default async function InterviewPage({
   params,
@@ -10,6 +10,6 @@ export default async function InterviewPage({
   const { userId } = await auth();
   if (!userId) redirect("/sign-in");
 
-  const { id } = await params; // still await per Next's requirement
-  return <VoiceRoom userId={userId} />;
+  const { id } = await params; // <-- await here
+  return <InterviewRoom interviewId={id} userId={userId} />;
 }

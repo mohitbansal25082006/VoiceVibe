@@ -112,19 +112,6 @@ BLOB_READ_WRITE_TOKEN=vercel_blob_rw_...
 
 ---
 
-## 🌐 Live Demo & Screenshots
-
-🎉 **Try it now:** [https://voicevibe-nine.vercel.app](https://voicevibe-nine.vercel.app)
-
-| Page | Screenshot |
-|---|---|
-| Landing | ![Landing](https://voicevibe-nine.vercel.app/og.png) |
-| Dashboard | ![Dashboard](https://voicevibe-nine.vercel.app/dashboard.png) |
-| Interview | ![Interview](https://voicevibe-nine.vercel.app/interview.png) |
-| Progress | ![Progress](https://voicevibe-nine.vercel.app/progress.png) |
-
----
-
 ## 📄 License
 MIT © 2024 VoiceVibe Team
 

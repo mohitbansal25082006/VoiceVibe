@@ -177,7 +177,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <div align="center">
 
-**© 2023 VoiceVibe. All rights reserved.**
+**© 2025 VoiceVibe. All rights reserved.**
 
 [![Website](https://img.shields.io/badge/Website-voicevibe.com-4285F4?style=for-the-badge)](https://voicevibe-nine.vercel.app)
 [![GitHub](https://img.shields.io/badge/GitHub-Repository-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/<you>/voicevibe)
